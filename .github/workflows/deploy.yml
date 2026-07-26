@@ -18,23 +18,13 @@ jobs:
       contents: read
 
     steps:
-      - name: Debug OIDC token
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const token = await core.getIDToken('sts.amazonaws.com');
-            const payload = JSON.parse(
-              Buffer.from(token.split('.')[1], 'base64').toString()
-            );
-            console.log(payload);
-            
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::649617407779:role/github-actions-role
+          role-to-assume: arn:aws:iam::649617407779:role/github-actions
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Log in to Amazon ECR
